@@ -155,8 +155,7 @@ def exchangeable_value(budget, exchange_rate, spread, denomination):
     This function calculates and returns the maximum value of the new currency after
     determining the exchange rate plus the spread.
     """
-    exchange_rate_plus_fee = exchange_rate + exchange_rate * (spread / 100)
-    exchanged_currency = int(budget / exchange_rate_plus_fee)
-    leftover = exchanged_currency % denomination
-
-    return exchanged_currency - leftover
+    exchange_rate_plus_fee = exchange_rate * (1 + spread / 100)
+    exchanged_currency = exchange_money(budget, exchange_rate_plus_fee)
+    
+    return exchanged_currency - get_leftover_of_bills(exchanged_currency, denomination)
